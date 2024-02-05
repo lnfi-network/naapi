@@ -5,7 +5,7 @@ describe('MARKET', () => {
     const owner = 'npub1zptcf2v9ms5dgd8mgulsckk04l9upr3lnerk6ckh9zyntzu0ness753zx8'
     const encodeOwner = '105784a985dc28d434fb473f0c5acfafcbc08e3f9e476d62d72889358b8f9e61'
     beforeEach(() => {
-        naapi = new NAAPI('https://market-api.nostrassets.com') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
+        naapi = new NAAPI('https://market-api.unift.xyz') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
     })
     it('getMarketTokenList', async () => {
         const res = await naapi.market.getMarketTokenList()

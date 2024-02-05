@@ -4,7 +4,7 @@ describe('LOCK', () => {
     let naapi
     
     beforeEach(() => {
-        naapi = new NAAPI('https://market-api.nostrassets.com') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
+        naapi = new NAAPI('https://market-api.unift.xyz') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
     })
     it('getLockList', async () => {
         const res = await naapi.lock.getLockList({page:1,count:10})

@@ -5,7 +5,7 @@ describe('ASSETS', () => {
     const owner = 'npub1zptcf2v9ms5dgd8mgulsckk04l9upr3lnerk6ckh9zyntzu0ness753zx8'
     const encodeOwner = '105784a985dc28d434fb473f0c5acfafcbc08e3f9e476d62d72889358b8f9e61'
     beforeEach(() => {
-        naapi = new NAAPI('https://market-api.nostrassets.com') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
+        naapi = new NAAPI('https://market-api.unift.xyz') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
     })
     it('getBalance', async () => {
         const res = await naapi.asset.getBalance(owner)
@@ -38,21 +38,22 @@ describe('ASSETS', () => {
         expect(res.code).toBe(0)
     })
     /* 
-        assetId:'0f8b9bb57522a824746b2ce364ae606ad433bc36db66ab86756e0e156a1ed34d'
+        assetId:'f69ffad9c19f6f1d74f791d11a19e1b38deac68da5159fcb66589312214be912'
         owner: '105784a985dc28d434fb473f0c5acfafcbc08e3f9e476d62d72889358b8f9e61'
         page: 1
         count: 10
     */
     it('getHolders', async () => {
-        const res = await naapi.asset.getHolders({ assetId: '0f8b9bb57522a824746b2ce364ae606ad433bc36db66ab86756e0e156a1ed34d', owner: encodeOwner, page: 1, count: 10 })
+        const res = await naapi.asset.getHolders({ assetId: 'f69ffad9c19f6f1d74f791d11a19e1b38deac68da5159fcb66589312214be912', owner: '', page: 1, count: 10 })
+        console.log("🚀 ~ it ~ res:", res)
         expect(res.code).toBe(0)
     })
     /* 
-        assetId:'0f8b9bb57522a824746b2ce364ae606ad433bc36db66ab86756e0e156a1ed34d'
+        assetId:'f69ffad9c19f6f1d74f791d11a19e1b38deac68da5159fcb66589312214be912'
         owner: '105784a985dc28d434fb473f0c5acfafcbc08e3f9e476d62d72889358b8f9e61'
     */
-    it('getHolder', async () => {
-        const res = await naapi.asset.getHolder('0f8b9bb57522a824746b2ce364ae606ad433bc36db66ab86756e0e156a1ed34d', encodeOwner)
+    it.only('getHolder', async () => {
+        const res = await naapi.asset.getHolder('f69ffad9c19f6f1d74f791d11a19e1b38deac68da5159fcb66589312214be912', 'cc6638845ecb7f7a0e99c59d44c5c1ea115985af17597ce4ab6cc240df15aade')
         expect(res.code).toBe(0)
     })
     /* 
