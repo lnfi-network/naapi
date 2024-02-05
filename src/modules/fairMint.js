@@ -15,7 +15,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the stake horoscope list.
    */
   getHoroscopList ({ stakeId, staked }) {
-    return this.request.post('/stake/getStakeHoroscopList', { stakeId, staked })
+    return this.request.post('/fairmint/getHoroscopList', { stakeId, staked })
   }
 
   /**
@@ -23,7 +23,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the stake activity.
    */
   getActivity () {
-    return this.request.post('/stake/getStakeActivity', {})
+    return this.request.post('/fairmint/getActivity', {})
   }
 
   /**
@@ -34,7 +34,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the user information.
    */
   getUserInfo ({ owner, stakeId }) {
-    return this.request.post('/stake/getStakeUser', { owner, stakeId })
+    return this.request.post('/fairmint/getUserInfo', { owner, stakeId })
   }
 
   /**
@@ -47,7 +47,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the user list.
    */
   getUserList ({ stakeId, horoscopId, page, count }) {
-    return this.request.post('/stake/getStakeUserList', { stakeId, horoscopId, page, count })
+    return this.request.post('/fairmint/getUserList', { stakeId, horoscopId, page, count })
   }
 
   /**
@@ -58,7 +58,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the ranking summary.
    */
   getRankingSummary ({ stakeId, horoscopId }) {
-    return this.request.post('/stake/getRankingSummary', { stakeId, horoscopId })
+    return this.request.post('/fairmint/getRankingSummary', { stakeId, horoscopId })
   }
 
   /**
@@ -70,7 +70,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the search ranking.
    */
   getSearchRanking ({ stakeId, horoscopId, ranking }) {
-    return this.request.post('/stake/getSearchRanking', { stakeId, horoscopId, ranking })
+    return this.request.post('/fairmint/getSearchRanking', { stakeId, horoscopId, ranking })
   }
 
   /**
@@ -83,7 +83,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the block list.
    */
   getBlockList ({ stakeId, page, count, orderBy }) {
-    return this.request.post('/stake/getBlockList', { stakeId, page, count, orderBy })
+    return this.request.post('/fairmint/getBlockList', { stakeId, page, count, orderBy })
   }
 
   /**
@@ -94,7 +94,7 @@ class FairMint {
    * @returns {Promise} The promise object representing the block stake user list.
    */
   getBlockUserList ({ stakeId, blockId }) {
-    return this.request.post('/stake/getBlockStakeUserList', { stakeId, blockId })
+    return this.request.post('/fairmint/getBlockUserList', { stakeId, blockId })
   }
 }
 export default FairMint
