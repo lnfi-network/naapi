@@ -20,14 +20,14 @@ It is an SDK library developed based on the NOSTR ASSET protocol, used to query 
 4. getMarketMyOrder
 5. return
 ### NAAPI.fairmint
-1. getStakeHoroscopList
-2. getStakeActivity
-3. getUserStakeInfo
-4. getStakeUserList
+1. getHoroscopList
+2. getActivity
+3. getUserInfo
+4. getUserList
 5. getRankingSummary
 6. getSearchRanking
 7. getBlockList
-8. getBlockStakeUserList
+8. getBlockUserList
 ### NAAPI.lock
 1. getLockList
 

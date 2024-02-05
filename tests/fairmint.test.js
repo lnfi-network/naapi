@@ -7,23 +7,23 @@ describe('FAIRMINT', () => {
     beforeEach(() => {
         naapi = new NAAPI('https://market-api.nostrassets.com')
     })
-    it('getStakeActivity', async () => {
-        const res = await naapi.fairmint.getStakeActivity()
+    it('getActivity', async () => {
+        const res = await naapi.fairmint.getActivity()
         expect(res.code).toBe(0)
     })
-    // getStakeHoroscopList
-    it('getStakeHoroscopList', async () => {
-        const res = await naapi.fairmint.getStakeHoroscopList({ stakeId:1, staked:false })
+    // getHoroscopList
+    it('getHoroscopList', async () => {
+        const res = await naapi.fairmint.getHoroscopList({ stakeId:1, staked:false })
         expect(res.code).toBe(0)
     })
-    //getUserStakeInfo
-    it('getUserStakeInfo', async () => {
-        const res = await naapi.fairmint.getUserStakeInfo({ owner:encodeOwner, stakeId:1 })
+    //getUserInfo
+    it('getUserInfo', async () => {
+        const res = await naapi.fairmint.getUserInfo({ owner:encodeOwner, stakeId:1 })
         expect(res.code).toBe(0)
     })
-    //getStakeUserList
-    it('getStakeUserList', async () => {
-        const res = await naapi.fairmint.getStakeUserList({ stakeId:1, horoscopId:8, page:1, count:10 })
+    //getUserList
+    it('getUserList', async () => {
+        const res = await naapi.fairmint.getUserList({ stakeId:1, horoscopId:8, page:1, count:10 })
         expect(res.code).toBe(0)
     })
     //getRankingSummary
@@ -40,9 +40,9 @@ describe('FAIRMINT', () => {
         console.log(res.data.stakeBlockPOS[0].blockId)
         expect(res.code).toBe(0)
     })
-    //getBlockStakeUserList
-    it('getBlockStakeUserList', async () => {
-        const res = await naapi.fairmint.getBlockStakeUserList({ stakeId:1, blockId:2 })
+    //getBlockUserList
+    it('getBlockUserList', async () => {
+        const res = await naapi.fairmint.getBlockUserList({ stakeId:1, blockId:2 })
         expect(res.code).toBe(0)
     })
 })

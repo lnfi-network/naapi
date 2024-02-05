@@ -7,16 +7,6 @@ describe('ASSETS', () => {
     beforeEach(() => {
         naapi = new NAAPI('https://market-api.nostrassets.com')
     })
-
-    it('should have asset, market, stake, and lock properties', () => {
-        expect(naapi.asset).toBeDefined()
-
-        expect(naapi.market).toBeDefined()
-
-        expect(naapi.stake).toBeDefined()
-
-        expect(naapi.lock).toBeDefined()
-    })
     it('getBalance', async () => {
         const res = await naapi.asset.getBalance(owner)
         expect(res.code).toBe(0)

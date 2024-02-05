@@ -8,45 +8,45 @@ class FairMint {
   }
 
   /**
-   * Retrieves the stake horoscope list.
+   * Retrieves the horoscope list.
    * @param {Object} params - The parameters for retrieving the stake horoscope list.
    * @param {string} params.stakeId - The ID of the stake.
    * @param {boolean} params.staked - Indicates if the stake is staked.
    * @returns {Promise} The promise object representing the stake horoscope list.
    */
-  getStakeHoroscopList ({ stakeId, staked }) {
+  getHoroscopList ({ stakeId, staked }) {
     return this.request.post('/stake/getStakeHoroscopList', { stakeId, staked })
   }
 
   /**
-   * Retrieves the stake activity.
+   * Retrieves the activity.
    * @returns {Promise} The promise object representing the stake activity.
    */
-  getStakeActivity () {
+  getActivity () {
     return this.request.post('/stake/getStakeActivity', {})
   }
 
   /**
-   * Retrieves the user stake information.
-   * @param {Object} params - The parameters for retrieving the user stake information.
-   * @param {string} params.owner - The owner of the stake.
-   * @param {string} params.stakeId - The ID of the stake.
-   * @returns {Promise} The promise object representing the user stake information.
+   * Retrieves the user information.
+   * @param {Object} params - The parameters for retrieving the user information.
+   * @param {string} params.owner - The owner.
+   * @param {string} params.stakeId - The ID.
+   * @returns {Promise} The promise object representing the user information.
    */
-  getUserStakeInfo ({ owner, stakeId }) {
+  getUserInfo ({ owner, stakeId }) {
     return this.request.post('/stake/getStakeUser', { owner, stakeId })
   }
 
   /**
-   * Retrieves the stake user list.
-   * @param {Object} params - The parameters for retrieving the stake user list.
-   * @param {string} params.stakeId - The ID of the stake.
+   * Retrieves the user list.
+   * @param {Object} params - The parameters for retrieving the user list.
+   * @param {string} params.stakeId - The ID of the.
    * @param {string} params.horoscopId - The ID of the horoscope.
    * @param {number} params.page - The page number.
    * @param {number} params.count - The number of items per page.
-   * @returns {Promise} The promise object representing the stake user list.
+   * @returns {Promise} The promise object representing the user list.
    */
-  getStakeUserList ({ stakeId, horoscopId, page, count }) {
+  getUserList ({ stakeId, horoscopId, page, count }) {
     return this.request.post('/stake/getStakeUserList', { stakeId, horoscopId, page, count })
   }
 
@@ -76,7 +76,7 @@ class FairMint {
   /**
    * Retrieves the block list.
    * @param {Object} params - The parameters for retrieving the block list.
-   * @param {string} params.stakeId - The ID of the stake.
+   * @param {string} params.stakeId - The ID of the block.
    * @param {number} params.page - The page number.
    * @param {number} params.count - The number of items per page.
    * @param {string} params.orderBy - The order by field.
@@ -88,12 +88,12 @@ class FairMint {
 
   /**
    * Retrieves the block stake user list.
-   * @param {Object} params - The parameters for retrieving the block stake user list.
+   * @param {Object} params - The parameters for retrieving the block user list.
    * @param {string} params.stakeId - The ID of the stake.
    * @param {string} params.blockId - The ID of the block.
    * @returns {Promise} The promise object representing the block stake user list.
    */
-  getBlockStakeUserList ({ stakeId, blockId }) {
+  getBlockUserList ({ stakeId, blockId }) {
     return this.request.post('/stake/getBlockStakeUserList', { stakeId, blockId })
   }
 }
