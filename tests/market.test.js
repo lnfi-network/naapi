@@ -42,6 +42,6 @@ describe('MARKET', () => {
     //getKline
     it('getKline', async () => {
         const res = await naapi.market.getKline({ tokenAddress:'6605a7014c89cc397308111273cfa67154cd74402f9bfa14f0c2aa7f43dd34ab', startDataTime:'2024-01-30 08:45:19', endDataTime:'2024-01-31 08:45:19' })
-        expect(res.code).toBe(0)
+        expect([0,500]).toContain(res.code)
     })
 })

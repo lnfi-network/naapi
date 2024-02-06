@@ -41,7 +41,7 @@ class Market {
      * @returns {Promise} A promise that resolves with the order history.
      */
   getOrderHistory ({ count, page, type, token, eventId, status, address }) {
-    return this.request.post('/market/api/orderHistory', { count, page, type, token, eventId, status, address })
+    return this.request.post('/market/api/orderHistoryV1', { count, page, type, token, eventId, status, address })
   }
 
   /**
@@ -56,7 +56,7 @@ class Market {
      * @returns {Promise} A promise that resolves with the user's orders.
      */
   getMarketMyOrder ({ count, page, type, token, status, owner }) {
-    return this.request.post('/market/api/myOrder', { count, page, type, token, status, owner })
+    return this.request.post('/market/api/myOrderV1', { count, page, type, token, status, owner })
   }
 
   /**
