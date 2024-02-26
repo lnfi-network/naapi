@@ -2,7 +2,7 @@ const NAAPI = require('../dist/naapi.cjs.js');
 
 describe('MARKET', () => {
     let naapi
-    const owner = 'npub1zptcf2v9ms5dgd8mgulsckk04l9upr3lnerk6ckh9zyntzu0ness753zx8'
+    const owner = 'npub1qxv7fg6npraas9h406954yv728rhr2nsv98kp3zwu4pcynazngasnwg0qc'
     const encodeOwner = '105784a985dc28d434fb473f0c5acfafcbc08e3f9e476d62d72889358b8f9e61'
     beforeEach(() => {
         naapi = new NAAPI('https://market-api.unift.xyz') // dev:https://market-api.unift.xyz | prod:https://market-api.nostrassets.com
