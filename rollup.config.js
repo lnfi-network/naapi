@@ -32,8 +32,8 @@ module.exports = {
   plugins: [
     nodePolyfills(),
     /*  clear({
-      targets: ['dist'], // 项目打包编译生成的目录
-      watch: true // 实时监听文件变化
+      targets: ['dist'], 
+      watch: true 
     }), */
     json(),
     resolve({
