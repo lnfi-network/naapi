@@ -29,8 +29,16 @@ jobs:
         id: version-check
         run: |
           CURRENT=$(node -p "require('./package.json').version")
-          LAST=$(git show ${{ github.event.before }}:package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version")
-          [[ "$CURRENT" != "$LAST" ]] && echo "changed=true" >> $GITHUB_OUTPUT || echo "changed=false" >> $GITHUB_OUTPUT
+          # Handle case where package.json might not exist in the "before" commit (e.g., first push to a branch)
+          LAST=$(git show ${{ github.event.before }}:package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version" || echo "")
+
+          if [[ "$CURRENT" != "$LAST" ]]; then
+            echo "Version changed: $LAST -> $CURRENT. Proceeding to publish."
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version $CURRENT has not changed. Skipping publish."
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Publish if version changed
         if: steps.version-check.outputs.changed == 'true'
