@@ -29,8 +29,7 @@ jobs:
         id: version-check
         run: |
           CURRENT=$(node -p "require('./package.json').version")
-          git fetch origin
-          LAST=$(git show origin/main:package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version")
+          LAST=$(git show ${{ github.event.before }}:package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version")
           [[ "$CURRENT" != "$LAST" ]] && echo "changed=true" >> $GITHUB_OUTPUT || echo "changed=false" >> $GITHUB_OUTPUT
 
       - name: Publish if version changed
