@@ -25,6 +25,14 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Generate build hash
+        id: build-hash
+        run: |
+          BUILD_HASH=$(find dist -type f -exec sha256sum {} \; | sha256sum | cut -d' ' -f1)
+          echo "build_hash=$BUILD_HASH" >> $GITHUB_OUTPUT
+          echo "Build hash: $BUILD_HASH"
+          echo "{\"version\":\"$(node -p \"require('./package.json').version\")\",\"buildHash\":\"$BUILD_HASH\",\"buildTime\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > dist/build-info.json
+
       - name: Check if package should be published
         id: check-publish
         run: |
@@ -37,6 +45,14 @@ jobs:
             echo "Version $PACKAGE_VERSION of $PACKAGE_NAME is new. Proceeding to publish."
             echo "should_publish=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-${{ steps.build-hash.outputs.build_hash }}
+          path: |
+            dist/
+            !dist/**/*.map
 
       - name: Publish new version
         if: steps.check-publish.outputs.should_publish == 'true'
