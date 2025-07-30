@@ -1,0 +1,39 @@
+name: Build and Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check version
+        id: version-check
+        run: |
+          CURRENT=$(node -p "require('./package.json').version")
+          git fetch origin
+          LAST=$(git show origin/main:package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version")
+          [[ "$CURRENT" != "$LAST" ]] && echo "changed=true" >> $GITHUB_OUTPUT || echo "changed=false" >> $GITHUB_OUTPUT
+
+      - name: Publish if version changed
+        if: steps.version-check.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
