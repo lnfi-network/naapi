@@ -1,6 +1,6 @@
 {
   "name": "naapi",
-  "version": "1.0.0-beta3",
+  "version": "1.0.0",
   "description": "nostr assets api sdk",
   "main": "dist/naapi.cjs.js",
   "module": "dist/naapi.esm.js",
