@@ -17,9 +17,10 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
+          cache: 'yarn'
 
       - name: Install deps
-        run: npm ci
+        run: yarn install
 
       - name: Build
         run: npm run build
