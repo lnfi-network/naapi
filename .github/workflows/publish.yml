@@ -33,15 +33,28 @@ jobs:
           LAST=$(git show ${{ github.event.before }}:package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version" || echo "")
 
           if [[ "$CURRENT" != "$LAST" ]]; then
-            echo "Version changed: $LAST -> $CURRENT. Proceeding to publish."
+            echo "Version changed: $LAST -> $CURRENT."
             echo "changed=true" >> $GITHUB_OUTPUT
           else
-            echo "Version $CURRENT has not changed. Skipping publish."
+            echo "Version $CURRENT has not changed."
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Publish if version changed
+      - name: Check if version already published
+        id: published-check
         if: steps.version-check.outputs.changed == 'true'
+        run: |
+          CURRENT=$(node -p "require('./package.json').version")
+          if npm view ${{ fromJson(readFile('package.json')).name }}@$CURRENT version > /dev/null 2>&1; then
+            echo "Version $CURRENT is already published on NPM. Skipping publish."
+            echo "published=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version $CURRENT is not published on NPM. Proceeding to publish."
+            echo "published=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish if version changed and not already published
+        if: steps.version-check.outputs.changed == 'true' && steps.published-check.outputs.published == 'false'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
