@@ -25,43 +25,21 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Check version
-        id: version-check
-        run: |
-          CURRENT=$(node -p "require('./package.json').version")
-
-          # Gracefully get the version from the 'before' commit, suppressing errors
-          LAST_PACKAGE_JSON=$(git show ${{ github.event.before }}:package.json 2>/dev/null)
-          if [[ -n "$LAST_PACKAGE_JSON" ]]; then
-            LAST=$(echo "$LAST_PACKAGE_JSON" | node -p "JSON.parse(require('fs').readFileSync(0)).version")
-          else
-            LAST=""
-          fi
-
-          if [[ "$CURRENT" != "$LAST" ]]; then
-            echo "Version changed: '$LAST' -> '$CURRENT'."
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "Version '$CURRENT' has not changed. Skipping publish."
-            echo "changed=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Check if version already published
-        id: published-check
-        if: steps.version-check.outputs.changed == 'true'
+      - name: Check if package should be published
+        id: check-publish
         run: |
           PACKAGE_NAME=$(node -p "require('./package.json').name")
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
           if npm view $PACKAGE_NAME@$PACKAGE_VERSION version > /dev/null 2>&1; then
             echo "Version $PACKAGE_VERSION of $PACKAGE_NAME is already published on NPM. Skipping publish."
-            echo "published=true" >> $GITHUB_OUTPUT
+            echo "should_publish=false" >> $GITHUB_OUTPUT
           else
-            echo "Version $PACKAGE_VERSION of $PACKAGE_NAME is not published on NPM. Proceeding to publish."
-            echo "published=false" >> $GITHUB_OUTPUT
+            echo "Version $PACKAGE_VERSION of $PACKAGE_NAME is new. Proceeding to publish."
+            echo "should_publish=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Publish if version changed and not already published
-        if: steps.version-check.outputs.changed == 'true' && steps.published-check.outputs.published == 'false'
+      - name: Publish new version
+        if: steps.check-publish.outputs.should_publish == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
