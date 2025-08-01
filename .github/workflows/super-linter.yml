@@ -1,4 +1,4 @@
-name: SonarCloud Code Quality Check
+name: Code Quality Check
 on:
   push:
     branches: [main, develop]
@@ -6,15 +6,14 @@ on:
     branches: [main, develop]
 
 jobs:
-  sonarcloud:
+  super-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - uses: super-linter/super-linter@v7
         env:
+          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          VALIDATE_JAVASCRIPT_ES: true
+          VALIDATE_JSON: true
+          VALIDATE_YAML: true
