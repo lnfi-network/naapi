@@ -1,13 +1,14 @@
 {
-  "name": "naapi",
-  "version": "1.0.0-beta2",
+  "name": "@lnfinetwork/naapi",
+  "version": "1.0.0",
   "description": "nostr assets api sdk",
   "main": "dist/naapi.cjs.js",
   "module": "dist/naapi.esm.js",
-  "author": "jim",
+  "author": "jim1007",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nostrassets/naapi.git"},
+    "url": "git+https://github.com/jimtracy1007/naapi.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.55.0",
