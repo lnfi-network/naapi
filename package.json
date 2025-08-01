@@ -29,6 +29,7 @@
   "dependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
+    "@lnfi-network/naapi": "^1.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "axios": "^1.6.7",
     "rollup-plugin-commonjs": "^10.1.0",
