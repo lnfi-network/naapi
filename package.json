@@ -41,6 +41,8 @@
     "build": "rollup -c & yarn build:umd",
     "build:umd": "BUILD=umd rollup -c",
     "watch": "rollup -c -w",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src --ext .js",
+    "lint:fix": "eslint src --ext .js --fix"
   }
 }

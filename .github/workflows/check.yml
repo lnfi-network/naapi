@@ -1,0 +1,79 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  eslint-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run ESLint check
+        run: npm run lint
+
+      - name: Generate ESLint report
+        if: failure()
+        run: npx eslint src --ext .js --format=json --output-file=eslint-report.json
+        continue-on-error: true
+
+      - name: Upload ESLint report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-report
+          path: eslint-report.json
+
+      - name: Comment PR with ESLint results
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## 🔍 ESLint Code Quality Check Results\n\n';
+
+            try {
+              const eslintReport = JSON.parse(fs.readFileSync('eslint-report.json', 'utf8'));
+              const totalErrors = eslintReport.reduce((sum, file) => sum + file.errorCount, 0);
+              const totalWarnings = eslintReport.reduce((sum, file) => sum + file.warningCount, 0);
+              
+              comment += `❌ **ESLint Check Failed**: ${totalErrors} errors, ${totalWarnings} warnings found\n\n`;
+              
+              // Show details for files with issues
+              eslintReport.forEach(file => {
+                if (file.errorCount > 0 || file.warningCount > 0) {
+                  comment += `**${file.filePath}**\n`;
+                  file.messages.forEach(msg => {
+                    const severity = msg.severity === 2 ? '❌' : '⚠️';
+                    comment += `- ${severity} Line ${msg.line}:${msg.column} - ${msg.message} (${msg.ruleId})\n`;
+                  });
+                  comment += '\n';
+                }
+              });
+              
+              comment += '\nPlease fix these issues before merging.';
+              
+            } catch (e) {
+              comment += '⚠️ **ESLint**: Unable to read report file\n';
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
