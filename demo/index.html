@@ -16,12 +16,6 @@
 
 
     </script>
-</head>
-
-<body>
-    <h1>NAAPI Demo</h1>
-    <div id="message"></div>
-
     <script>
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -33,6 +27,13 @@
             messageDiv.innerHTML = `Hello, ${userName}! Welcome to the demo.`; // 潜在的 XSS 漏洞点
         }
     </script>
+</head>
+
+<body>
+    <h1>NAAPI Demo</h1>
+    <div id="message"></div>
+
+
 </body>
 
 </html>
